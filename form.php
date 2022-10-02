@@ -9,10 +9,14 @@
 </head>
 <body>
 
-<form  action="/form.php"  method="post">
+<form  action="/thanks.php"  method="post">
     <div>
-      <label  for="nom">Nom :</label>
-      <input  type="text"  id="nom"  name="user_name">
+      <label  for="lastname">Nom :</label>
+      <input  type="text"  id="nom"  name="user_lastname">
+    </div>
+    <div>
+      <label  for="lastname">Prenom :</label>
+      <input  type="text"  id="nom"  name="user_firstname">
     </div>
     <div>
       <label  for="courriel">Courriel :</label>
