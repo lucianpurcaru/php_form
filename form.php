@@ -1,3 +1,48 @@
+<?php
+
+$subjects = [
+  'sujet' => 'Votre sujet',
+  'infos' => 'Renseignements',
+  'bill' => 'Facture',
+  'other' => 'Autres informations',
+];
+            
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+	$contact = array_map('trim', $_POST);
+    /* echo htmlentities($contact['name']); */
+
+	$errors = [];
+
+	if (empty($contact['name'])) {
+        $errors[] = 'Le nom est obligatoire';
+    }
+
+	if (empty($contact['email'])) {
+        $errors[] = 'L\'email est obligatoire';
+	
+    }
+
+	if (!filter_var($contact['email'], FILTER_VALIDATE_EMAIL)) {
+        $errors[] = 'Le format d\'email est incorrect';
+	}
+
+	if(!key_exists($contact['subject'], $subjects)) {
+        $errors[] = 'Le sujet est incorrect';
+    }
+
+	if (empty($contact['message'])) {
+        $errors[] = 'Le message est obligatoire';
+    }
+  
+    if (empty($errors)) {
+      header('Location: thanks.php');
+    }
+?>
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,13 +55,16 @@
 <body>
 
 <form  action="/thanks.php"  method="post">
+<?php if (!empty($errors)) : ?>
+						<ul class="error">
+							<?php foreach ($errors as $error) : ?>
+								<li><?= $error; ?></li>
+							<?php endforeach; ?>
+						</ul>
+					<?php endif; ?>
     <div>
-      <label  for="lastname">Nom :</label>
+      <label  for="name">Nom :</label>
       <input  type="text"  id="nom"  name="lastname">
-    </div>
-    <div>
-      <label  for="firstname">Prenom :</label>
-      <input  type="text"  id="nom"  name="firstname">
     </div>
     <div>
       <label  for="courriel">Courriel :</label>
@@ -28,14 +76,13 @@
     </div>
     <div>
         <label for="subject">Objet de la demande:</label>
-        <SELECT name="subject" id="subject" size="1">
-            <OPTION value="">Objet de ma demande</OPTION>
-            <OPTION>Souscription</OPTION>
-            <OPTION>Renseignements</OPTION>
-            <OPTION>Facture</OPTION>
-            <OPTION>Assistance</OPTION>
-            <OPTION>Autres informations</OPTION>
-        </SELECT>
+        <select type="text" id="subject" class="field" placeholder="Sujet" name="subject" required>
+						<?php foreach ($subjects as $subject => $subjectMessage) : ?>
+							<option value="<?= $subject ?>" <?php if (isset($contact['subject']) && $contact['subject'] === $subject) : ?> selected <?php endif; ?>>
+								<?= $subjectMessage ?>
+							</option>
+						<?php endforeach; ?>
+					</select>
     </div>
     <div>
       <label  for="message">Message :</label>
@@ -45,13 +92,6 @@
       <button  type="submit">Envoyer votre message</button>
     </div>
   </form>
-
-  <?php
-  var_dump($_POST);
-  ?>
-  <?php
-  echo $_POST['user_name'];
-  ?>
 
 </body>
 </html>
