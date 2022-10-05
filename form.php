@@ -12,19 +12,19 @@
 <form  action="/thanks.php"  method="post">
     <div>
       <label  for="lastname">Nom :</label>
-      <input  type="text"  id="nom"  name="user_lastname">
+      <input  type="text"  id="nom"  name="lastname">
     </div>
     <div>
-      <label  for="lastname">Prenom :</label>
-      <input  type="text"  id="nom"  name="user_firstname">
+      <label  for="firstname">Prenom :</label>
+      <input  type="text"  id="nom"  name="firstname">
     </div>
     <div>
       <label  for="courriel">Courriel :</label>
-        <input  type="email"  id="courriel"  name="user_email">
+        <input  type="email"  id="courriel"  name="email">
     </div>
     <div>
         <label for="phonenumber">Téléphone :</label>
-        <input type="tel" id="phonenumber" name="user_phone">
+        <input type="tel" id="phonenumber" name="phone">
     </div>
     <div>
         <label for="subject">Objet de la demande:</label>
